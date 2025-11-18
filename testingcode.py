@@ -8,7 +8,7 @@ NumOfFiles = 0
 FileExtension = ""
 DirectoryName = ""
 FVar = "Folder_FF"
-js_file = "settings.json"
+jsFile = "settings.json"
 
 print("--")
 print("--")
@@ -69,7 +69,7 @@ Json_1 = {
 }
 Json_str = json.dumps(Json_1)
 try:
-    with open(js_file, "r") as file:
+    with open(jsFile, "r") as file:
         _js_file_ = json.load(file)
 except:
     print("settings.json not found.")
@@ -85,8 +85,8 @@ except:
     quit()
 
 try:
-    with open(js_file, "w") as file:
-        json.dump(_js_file_, file, indent=4)
+    with open(jsFile, "w") as file:
+        json.dump(_js_file_, file)
 except:
     print("Something went Wrong.")
     quit()
