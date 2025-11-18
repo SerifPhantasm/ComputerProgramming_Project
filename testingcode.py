@@ -35,7 +35,7 @@ else:
 while True:
     try:
         NumOfFiles = int(input("How many files would you like to create?"))
-        if NumOfFiles >= 1000:
+        if NumOfFiles >= 100000:
             print(" You're printing TOO MANY files. ")
         else:
             print(NumOfFiles)
@@ -52,7 +52,7 @@ str(NumOfFiles)
 
 while True:
     try:
-        FileExtension = input("Name the file extension you would like the files to be. ")
+        FileExtension = input("Name the file extension you would like the files to be. (eg .txt, .docx etc) ")
         if isinstance(FileExtension, int):
             print("You can't add numbers into the extension. ")
         else:
@@ -62,6 +62,9 @@ while True:
         print("ERROR")
 else:
     print("")
+
+if FileExtension[0] != ".":
+    FileExtension = "." + FileExtension
 
 Json_1 = {
     "FileName": FileName,
@@ -97,6 +100,18 @@ print(Line_)
 print(Json_1)
 print(Line_)
 
+char = "\U0010FFFF"
+
+print(" ")
+input(f"Do you want to create {NumOfFiles} of these files? Press Enter if YES. ")
+for i in range(NumOfFiles):
+    full_path = os.path.join(FVar, f"{FileName}_{i+1}{FileExtension}")
+    try:
+        with open(full_path, "w") as f:
+            f.write(f"{char}\n")
+        print(f"Created file: {full_path}")
+    except Exception as e:
+        print(f"Failed to create file {full_path}: {e}")
 
 print("end ")
 
