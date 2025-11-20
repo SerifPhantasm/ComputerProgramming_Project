@@ -2,6 +2,7 @@ import time
 import json
 import os
 import sys
+from FileExtensionList import file_extensions
 
 Line_ = ("---------------------------------------------------------")
 FileName = "null"
@@ -54,19 +55,27 @@ str(NumOfFiles)
 
 while True:
     try:
-        FileExtension = input("Name the file extension you would like the files to be. (eg .txt, .docx etc) ")
-        if isinstance(FileExtension, int):
-            print("You can't add numbers into the extension. ")
+        FileExtension = input("Name the file extension you would like the files to be. (eg .txt, .docx etc) ").lower()
+        print(FileExtension)
+
+        
+
+        if FileExtension not in file_extensions:
+            print("Invalid File Extension.")
         else:
-            print(FileExtension)
+            print(f"{FileExtension} is a valid file extension.")
             break
+        
+
     except:
-        print("ERROR")
+        print("ERROR: Something went wrong. Please try again.")
 else:
     print("")
 
 if FileExtension[0] != ".":
     FileExtension = "." + FileExtension
+
+
 
 Json_1 = {
     "FileName": FileName,
@@ -105,15 +114,20 @@ print(Line_)
 
 
 print(" ")
-input(f"Do you want to create {NumOfFiles} of these files? Press Enter if YES. ")
-for i in range(NumOfFiles):
-    full_path = os.path.join(FVar, f"{FileName}_{i+1}{FileExtension}")
-    try:
-        with open(full_path, "w") as f:
-            f.write(f"This is the {NumOfFiles} file.")
-        print(f"Created file: {full_path}")
-    except Exception as e:
-        print(f"Failed to create file {full_path}: {e}")
+YoN = input(f"Do you want to create {NumOfFiles} of these files? Type 'y' or 'n' ").lower()
+if YoN.lower != "y":
+    print("Exiting Program...")
+    time.sleep(0.5)
+    exit()
+else:
+    for i in range(NumOfFiles):
+        full_path = os.path.join(FVar, f"{FileName}_{i+1}{FileExtension}")
+        try:
+            with open(full_path, "w") as f:
+                f.write(f"This is the {NumOfFiles} file.")
+            print(f"Created file: {full_path}")
+        except Exception as e:
+            print(f"Failed to create file {full_path}: {e}")
 
 print("end ")
 
