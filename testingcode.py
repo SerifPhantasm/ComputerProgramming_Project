@@ -10,9 +10,11 @@ FileExtension = ""
 DirectoryName = ""
 FVar = "Folder_FF"
 jsFile = "settings.json"
+SysTwo = sys.argv[1:]
 
 print("--")
 print("--")
+
 
 
 if not os.path.exists(FVar):
@@ -34,8 +36,8 @@ else:
 
 while True:
     try:
-        NumOfFiles = int(input("How many files would you like to create?"))
-        if NumOfFiles >= 100000:
+        NumOfFiles = int(input("How many files would you like to create? "))
+        if NumOfFiles >= 10000:
             print(" You're printing TOO MANY files. ")
         else:
             print(NumOfFiles)
@@ -100,7 +102,7 @@ print(Line_)
 print(Json_1)
 print(Line_)
 
-char = "\U0010FFFF"
+
 
 print(" ")
 input(f"Do you want to create {NumOfFiles} of these files? Press Enter if YES. ")
@@ -108,7 +110,7 @@ for i in range(NumOfFiles):
     full_path = os.path.join(FVar, f"{FileName}_{i+1}{FileExtension}")
     try:
         with open(full_path, "w") as f:
-            f.write(f"{char}\n")
+            f.write(f"This is the {NumOfFiles} file.")
         print(f"Created file: {full_path}")
     except Exception as e:
         print(f"Failed to create file {full_path}: {e}")
