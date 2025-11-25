@@ -9,7 +9,7 @@ FileName = "null"
 NumOfFiles = 0
 FileExtension = ""
 DirectoryName = ""
-FVar = "Folder_FF"
+FVar = "FilesFolder"
 jsFile = "settings.json"
 
 print("--")
