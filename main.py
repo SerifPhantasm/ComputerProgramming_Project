@@ -13,10 +13,12 @@ FVar = "FilesFolder"
 jsFile = "settings.json"
 
 print("--")
-if len(sys.argv) == 3:
+if len(sys.argv) > 0:
     print(sys.argv[1])
-    print(sys.argv[2])
-    print(sys.argv[3])
+    if len(sys.argv) > 2:
+        print(sys.argv[2])
+        if len(sys.argv) > 3:
+            print(sys.argv[3])
 print("--")
 
 
@@ -117,8 +119,8 @@ print(Line_)
 
 
 print(" ")
-YoN = input(f"Do you want to create {NumOfFiles} of these files? Type 'y' or 'n' ").lower()
-if YoN.lower != "y":
+Confirmation_ = input(f"Do you want to create {NumOfFiles} of these files? Type 'y' or 'n' ").lower()
+if Confirmation_.lower != "y":
     print("Exiting Program...")
     time.sleep(0.5)
     exit()
