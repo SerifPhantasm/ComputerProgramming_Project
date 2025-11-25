@@ -11,9 +11,12 @@ FileExtension = ""
 DirectoryName = ""
 FVar = "Folder_FF"
 jsFile = "settings.json"
-SysTwo = sys.argv[1:]
 
 print("--")
+if len(sys.argv) == 3:
+    print(sys.argv[1])
+    print(sys.argv[2])
+    print(sys.argv[3])
 print("--")
 
 
