@@ -12,14 +12,6 @@ DirectoryName = ""
 FVar = "FilesFolder"
 jsFile = "settings.json"
 
-print("--")
-if len(sys.argv) > 0:
-    print(sys.argv[1])
-    if len(sys.argv) > 2:
-        print(sys.argv[2])
-        if len(sys.argv) > 3:
-            print(sys.argv[3])
-print("--")
 
 
 
@@ -29,53 +21,50 @@ if not os.path.exists(FVar):
 else:
     print(f"The Folder, ({FVar}) already Exists.")
 
-
-while True:
-    FileName = input("What Would you want the file name to be? ")
-    if len(FileName) >= 20:
-        print(" Error: File Name is too long. ")
-    else:
-        print(FileName)
-        break
-else:
-    print("")
-
-while True:
-    try:
-        NumOfFiles = int(input("How many files would you like to create? "))
-        if NumOfFiles >= 10000:
-            print(" You're printing TOO MANY files. ")
+def FileName_Valid():
+    while True:
+        FileName = input("What Would you want the file name to be? ")
+        if len(FileName) >= 20:
+            print(" Error: File Name is too long. ")
         else:
-            print(NumOfFiles)
+            print(FileName)
             break
-    except(ValueError):
-        print(" ERROR: Wrong Value ")
-    except(OverflowError):
-        print(" ERROR: Overflow ")
-    except:
-        print(" ERROR, try again. ")
-else:
-    print("")
-str(NumOfFiles)
+    return FileName
 
-while True:
-    try:
-        FileExtension = input("Name the file extension you would like the files to be. (eg .txt, .docx etc) ").lower()
-        print(FileExtension)
 
-        
+def NumOfFiles_Valid():
+    while True:
+        try:
+            NumOfFiles = int(input("How many files would you like to create? "))
+            if NumOfFiles >= 10000:
+                print(" You're printing TOO MANY files. ")
+            else:
+                print(NumOfFiles)
+                break
+        except(ValueError):
+            print(" ERROR: Wrong Value ")
+        except(OverflowError):
+            print(" ERROR: Overflow ")
+    str(NumOfFiles)
+    
+    return NumOfFiles
+    
+def FileExtension():
+    while True:
+        try:
+            FileExtension = input("Name the file extension you would like the files to be. (eg .txt, .docx etc) ").lower()
+            print(FileExtension)
 
-        if FileExtension not in file_extensions:
-            print("Invalid File Extension.")
-        else:
-            print(f"{FileExtension} is a valid file extension.")
-            break
-        
-
-    except:
-        print("ERROR: Something went wrong. Please try again.")
-else:
-    print("")
+            if FileExtension not in file_extensions:
+                print("Invalid File Extension.")
+            else:
+                print(f"{FileExtension} is a valid file extension.")
+                break
+            
+        except:
+            print("ERROR: Something went wrong. Please try again.")
+    return FileExtension
+    
 
 if FileExtension[0] != ".":
     FileExtension = "." + FileExtension
@@ -120,7 +109,7 @@ print(Line_)
 
 print(" ")
 Confirmation_ = input(f"Do you want to create {NumOfFiles} of these files? Type 'y' or 'n' ").lower()
-if Confirmation_.lower != "y":
+if Confirmation_ != "y":
     print("Exiting Program...")
     time.sleep(0.5)
     exit()
@@ -133,6 +122,18 @@ else:
             print(f"Created file: {full_path}")
         except Exception as e:
             print(f"Failed to create file {full_path}: {e}")
+
+
+def Default_Setup():
+    # code
+    print("-")
+    FileName_Valid()
+
+    NumOfFiles_Valid()
+
+
+Default_Setup()
+
 
 print("end ")
 
