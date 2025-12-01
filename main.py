@@ -9,9 +9,9 @@ FileName = "null"
 NumOfFiles = 0
 FileExtension = ""
 DirectoryName = ""
-FVar = "FilesFolder"
+FVar = "Created Files"
 jsFile = "settings.json"
-
+CustomMessage = ""
 
 
 
@@ -20,6 +20,7 @@ if not os.path.exists(FVar):
     print(f"Folder, ({FVar}) has been Created")
 else:
     print(f"The Folder, ({FVar}) already Exists.")
+
 
 def FileName_Valid():
     while True:
@@ -30,7 +31,6 @@ def FileName_Valid():
             print(FileName)
             break
     return FileName
-
 
 def NumOfFiles_Valid():
     while True:
@@ -49,7 +49,7 @@ def NumOfFiles_Valid():
     
     return NumOfFiles
     
-def FileExtension():
+def FileExtension_Valid():
     while True:
         try:
             FileExtension = input("Name the file extension you would like the files to be. (eg .txt, .docx etc) ").lower()
@@ -63,53 +63,63 @@ def FileExtension():
             
         except:
             print("ERROR: Something went wrong. Please try again.")
+
+    if FileExtension[0] != ".":
+        FileExtension = "." + FileExtension
+
     return FileExtension
-    
 
-if FileExtension[0] != ".":
-    FileExtension = "." + FileExtension
+def Info_ToJson(FileName, NumOfFiles, FileExtension):
+    Json_1 = {
+        "FileName": FileName,
+        "NumOfFiles": NumOfFiles,
+        "FileExtension": FileExtension
+    }
+    Json_str = json.dumps(Json_1)
+    try:
+        with open(jsFile, "r") as file:
+            _js_file_ = json.load(file)
+    except:
+        print("settings.json not found.")
+        print("Unable to Continue.")
+        quit()
 
+    try:
+        _js_file_["FileName"] = FileName
+        _js_file_["NumOfFiles"] = NumOfFiles
+        _js_file_["FileExtension"] = FileExtension
+    except:
+        print("Something went Wrong.")
+        quit()
 
+    try:
+        with open(jsFile, "w") as file:
+            json.dump(_js_file_, file)
+    except:
+        print("Something went Wrong.")
+        quit()
 
-Json_1 = {
-    "FileName": FileName,
-    "NumOfFiles": NumOfFiles,
-    "FileExtension": FileExtension
-}
-Json_str = json.dumps(Json_1)
-try:
-    with open(jsFile, "r") as file:
-        _js_file_ = json.load(file)
-except:
-    print("settings.json not found.")
-    print("Unable to Continue.")
-    quit()
+    print(Line_)
+    print(Json_1)
+    print(Line_)
 
-try:
-    _js_file_["FileName"] = FileName
-    _js_file_["NumOfFiles"] = NumOfFiles
-    _js_file_["FileExtension"] = FileExtension
-except:
-    print("Something went Wrong.")
-    quit()
-
-try:
-    with open(jsFile, "w") as file:
-        json.dump(_js_file_, file)
-except:
-    print("Something went Wrong.")
-    quit()
-
-
-print(Line_)
-print(Json_1)
-print(Line_)
+    return Json_1
 
 
+def Default_Setup():
+    print("-")
+    FileName = FileName_Valid()
+    NumOfFiles = NumOfFiles_Valid()
+    FileExtension = FileExtension_Valid()
+    return FileName, NumOfFiles, FileExtension
+
+FileName, NumOfFiles, FileExtension = Default_Setup()
+
+Json_1 = Info_ToJson(FileName, NumOfFiles, FileExtension)
 
 print(" ")
 Confirmation_ = input(f"Do you want to create {NumOfFiles} of these files? Type 'y' or 'n' ").lower()
-if Confirmation_ != "y":
+if Confirmation_ == "n":
     print("Exiting Program...")
     time.sleep(0.5)
     exit()
@@ -123,16 +133,6 @@ else:
         except Exception as e:
             print(f"Failed to create file {full_path}: {e}")
 
-
-def Default_Setup():
-    # code
-    print("-")
-    FileName_Valid()
-
-    NumOfFiles_Valid()
-
-
-Default_Setup()
 
 
 print("end ")
