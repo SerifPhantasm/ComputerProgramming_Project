@@ -2,24 +2,27 @@ import time
 import json
 import os
 import sys
-from FileExtensionList import file_extensions
+from FileExtensionList import file_extensions 
+# add custom message from here to json file and into files.
+# add sys.argv 1-3 for filename, num of files, file extension, make input for cus-msg
 
 Line_ = ("---------------------------------------------------------")
 FileName = "null"
 NumOfFiles = 0
 FileExtension = ""
 DirectoryName = ""
-FVar = "Created Files"
+Folder_ = "Created Files"
 jsFile = "settings.json"
-CustomMessage = ""
+
+CustomMessage = f"This is the {NumOfFiles} file."
 
 
 
-if not os.path.exists(FVar):
-    os.mkdir(FVar)
-    print(f"Folder, ({FVar}) has been Created")
+if not os.path.exists(Folder_):
+    os.mkdir(Folder_)
+    print(f"Folder, ({Folder_}) has been Created")
 else:
-    print(f"The Folder, ({FVar}) already Exists.")
+    print(f"The Folder, ({Folder_}) already Exists.")
 
 
 def FileName_Valid():
@@ -69,11 +72,23 @@ def FileExtension_Valid():
 
     return FileExtension
 
-def Info_ToJson(FileName, NumOfFiles, FileExtension):
+def CustomMessage_Valid():
+    while True:
+        try:
+            CustomMessage = input("What custom message would you like to add to each file? ")
+            print(CustomMessage)
+            break
+        except:
+            print("ERROR: Something went wrong. Please try again.")
+    return CustomMessage
+
+def Info_ToJson(FileName, NumOfFiles, FileExtension, CustomMessage):
     Json_1 = {
         "FileName": FileName,
         "NumOfFiles": NumOfFiles,
-        "FileExtension": FileExtension
+        "FileExtension": FileExtension,
+ #       "CustomMessage": CustomMessage 
+ #          complete at uni
     }
     Json_str = json.dumps(Json_1)
     try:
@@ -105,35 +120,41 @@ def Info_ToJson(FileName, NumOfFiles, FileExtension):
 
     return Json_1
 
+print(" ")
+
+def Creating_Files():
+    Confirmation_ = input(f"Do you want to create {NumOfFiles} of these files? Type 'y' or 'n' ").lower()
+    if Confirmation_ == "n":
+        print("Exiting Program...")
+        time.sleep(0.5)
+        exit()
+    else:
+        for i in range(NumOfFiles):
+            full_path = os.path.join(Folder_, f"{FileName}_{i+1}{FileExtension}")
+            count = i + 1
+            count_str = ("File Number." + str(count))
+            try:
+                with open(full_path, "w") as f:
+                    f.write(CustomMessage + "\n" + count_str)
+                print(f"Created file: {full_path}")
+            except Exception as e:
+                print(f"Failed to create file {full_path}: {e}")
+    return
 
 def Default_Setup():
     print("-")
     FileName = FileName_Valid()
     NumOfFiles = NumOfFiles_Valid()
     FileExtension = FileExtension_Valid()
+    
     return FileName, NumOfFiles, FileExtension
 
-FileName, NumOfFiles, FileExtension = Default_Setup()
+# add custom message 
 
+
+FileName, NumOfFiles, FileExtension = Default_Setup()
 Json_1 = Info_ToJson(FileName, NumOfFiles, FileExtension)
 
-print(" ")
-Confirmation_ = input(f"Do you want to create {NumOfFiles} of these files? Type 'y' or 'n' ").lower()
-if Confirmation_ == "n":
-    print("Exiting Program...")
-    time.sleep(0.5)
-    exit()
-else:
-    for i in range(NumOfFiles):
-        full_path = os.path.join(FVar, f"{FileName}_{i+1}{FileExtension}")
-        try:
-            with open(full_path, "w") as f:
-                f.write(f"This is the {NumOfFiles} file.")
-            print(f"Created file: {full_path}")
-        except Exception as e:
-            print(f"Failed to create file {full_path}: {e}")
+Creating_Files()
 
-
-
-print("end ")
 
