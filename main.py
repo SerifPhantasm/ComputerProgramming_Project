@@ -8,7 +8,6 @@ Line_ = ("---------------------------------------------------------")
 FileName = "null"
 NumOfFiles = 0
 FileExtension = ""
-DirectoryName = ""
 Folder_ = "Created Files"
 jsFile = "settings.json"
 CustomMessage = f"This is the {NumOfFiles} file."
@@ -98,6 +97,7 @@ def Info_ToJson(FileName, NumOfFiles, FileExtension, CustomMessage):
         _js_file_["FileName"] = FileName
         _js_file_["NumOfFiles"] = NumOfFiles
         _js_file_["FileExtension"] = FileExtension
+        _js_file_["CustomMessage"] = CustomMessage
     except:
         print("Something went Wrong.")
         quit()
@@ -148,21 +148,25 @@ def Default_Setup():
 # -- func end --
 
 if len(sys.argv) > 4:
-    sys.argv[1] = FileName
-    sys.argv[2] = NumOfFiles
-    sys.argv[3] = FileExtension
-    sys.argv[4] = CustomMessage
+    FileName = sys.argv[1]
+    NumOfFiles = int(sys.argv[2])
+    FileExtension = sys.argv[3]
+    CustomMessage = sys.argv[4]
     Info_ToJson(FileName, NumOfFiles, FileExtension, CustomMessage)
     Creating_Files()
     print("Finished.")
     sys.exit()
 elif len(sys.argv) <= 4:
     print(" Not enough system arguments provided. Running default setup. ")
-
+elif len(sys.argv) == 0:
+    print("")
 
 FileName, NumOfFiles, FileExtension, CustomMessage = Default_Setup()
 Json_1 = Info_ToJson(FileName, NumOfFiles, FileExtension, CustomMessage)
 
 Creating_Files()
+
+
+
 
 
