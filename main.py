@@ -34,47 +34,60 @@ def Create_Folder():
 
 
 def FileName_Valid():
-    while True:
-        FileName = input("What Would you want the file name to be? ")
-        if len(FileName) >= 20:
-            print(" Error: File Name is too long. ")
-        else:
-            print(FileName)
-            break
+    try:
+        while True:
+            FileName = input("What Would you want the file name to be? ")
+            if len(FileName) >= 20:
+                print(" Error: File Name is too long. ")
+            else:
+                print(FileName)
+                break
+    except KeyboardInterrupt:
+        print("\n Exiting Program...")
+        sys.exit()
+
     return FileName
 
 
 def NumOfFiles_Valid():
-    while True:
-        try:
-            NumOfFiles = int(input("How many files would you like to create? "))
-            if NumOfFiles >= 10000:
-                print(" You're printing TOO MANY files. ")
-            else:
-                print(NumOfFiles)
-                break
-        except(ValueError):
-            print(" ERROR: Wrong Value ")
-        except(OverflowError):
-            print(" ERROR: Overflow ")
-    str(NumOfFiles)
+    try:
+        while True:
+            try:
+                NumOfFiles = int(input("How many files would you like to create? "))
+                if NumOfFiles >= 10000:
+                    print(" You're printing TOO MANY files. ")
+                else:
+                    print(NumOfFiles)
+                    break
+            except(ValueError):
+                print(" ERROR: Wrong Value ")
+            except(OverflowError):
+                print(" ERROR: Overflow ")
+        str(NumOfFiles)
+    except KeyboardInterrupt:
+        print("\n Exiting Program...")
+        sys.exit()
     
     return NumOfFiles
 
 
 def FileExtension_Valid():
-    while True:
-        try:
-            FileExtension = input("Name the file extension you would like the files to be. (eg .txt, .docx etc) ").lower()
-            print(FileExtension)
+    try:
+        while True:
+            try:
+                FileExtension = input("Name the file extension you would like the files to be. (eg .txt, .docx etc) ").lower()
+                print(FileExtension)
 
-            if FileExtension not in file_extensions:
-                print("Invalid File Extension.")
-            else:
-                print(f"{FileExtension} is a valid file extension.")
-                break
-        except:
-            print("ERROR: Something went wrong. Please try again.")
+                if FileExtension not in file_extensions:
+                    print("Invalid File Extension.")
+                else:
+                    print(f"{FileExtension} is a valid file extension.")
+                    break
+            except:
+                print("ERROR: Something went wrong. Please try again.")
+    except KeyboardInterrupt:
+        print("\n Exiting Program...")
+        sys.exit()
 
     if FileExtension[0] != ".":
         FileExtension = "." + FileExtension
@@ -83,18 +96,22 @@ def FileExtension_Valid():
 
 
 def CustomMessage_Valid():
-    while True:
-        try:
-            CustomMessage = input("What custom message would you like to add to each file? ")
-            print(CustomMessage)
-            break
-        except:
-            print("ERROR: Something went wrong. Please try again.")
+    try:
+        while True:
+            try:
+                CustomMessage = input("What custom message would you like to add to each file? ")
+                print(CustomMessage)
+                break
+            except:
+                print("ERROR: Something went wrong. Please try again.")
+    except KeyboardInterrupt:
+        print("\n Exiting Program...")
+        sys.exit()
+
     return CustomMessage
 
 
 def Info_ToJson(FileName, NumOfFiles, FileExtension, CustomMessage):
-    Json_str = json.dumps(Json_1)
     try:
         with open(jsFile, "r") as file:
             _js_file_ = json.load(file)
@@ -120,10 +137,10 @@ def Info_ToJson(FileName, NumOfFiles, FileExtension, CustomMessage):
         quit()
 
     print(Line_)
-    print(Json_1)
+    print(_js_file_)
     print(Line_)
 
-    return Json_1
+    return _js_file_
 
 print(" ")
 
@@ -224,7 +241,7 @@ elif len(sys.argv) <= 4:
     print(" Not enough system arguments provided OR incorrect system argument... \n Running default setup. ")
         
 
-Create_Folder, FileName, NumOfFiles, FileExtension, CustomMessage = Default_Setup()
+FileName, NumOfFiles, FileExtension, CustomMessage = Default_Setup()
 Json_1 = Info_ToJson(FileName, NumOfFiles, FileExtension, CustomMessage)
 
 Creating_Files()

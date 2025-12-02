@@ -35,3 +35,7 @@ Outputs the previous inputs and lets you output them quicker
 **Python main.py help**
 
 Gives a more simplified version of this 'how to use' page.
+
+
+## How I used AI
+For this project, I used AI to help me debug and fix my code with the help of Copilot. I made sure to proof-read any AI fix to make sure that it didn't give me worse issues in my code and that it were fixes that I was able to understand myself.
