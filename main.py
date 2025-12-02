@@ -3,8 +3,6 @@ import json
 import os
 import sys
 from FileExtensionList import file_extensions 
-# add custom message from here to json file and into files.
-# add sys.argv 1-3 for filename, num of files, file extension, make input for cus-msg
 
 Line_ = ("---------------------------------------------------------")
 FileName = "null"
@@ -13,9 +11,7 @@ FileExtension = ""
 DirectoryName = ""
 Folder_ = "Created Files"
 jsFile = "settings.json"
-
 CustomMessage = f"This is the {NumOfFiles} file."
-
 
 
 if not os.path.exists(Folder_):
@@ -87,8 +83,7 @@ def Info_ToJson(FileName, NumOfFiles, FileExtension, CustomMessage):
         "FileName": FileName,
         "NumOfFiles": NumOfFiles,
         "FileExtension": FileExtension,
- #       "CustomMessage": CustomMessage 
- #          complete at uni
+        "CustomMessage": CustomMessage 
     }
     Json_str = json.dumps(Json_1)
     try:
@@ -132,7 +127,7 @@ def Creating_Files():
         for i in range(NumOfFiles):
             full_path = os.path.join(Folder_, f"{FileName}_{i+1}{FileExtension}")
             count = i + 1
-            count_str = ("File Number." + str(count))
+            count_str = ("File Number: " + str(count))
             try:
                 with open(full_path, "w") as f:
                     f.write(CustomMessage + "\n" + count_str)
@@ -146,14 +141,27 @@ def Default_Setup():
     FileName = FileName_Valid()
     NumOfFiles = NumOfFiles_Valid()
     FileExtension = FileExtension_Valid()
-    
-    return FileName, NumOfFiles, FileExtension
+    CustomMessage = CustomMessage_Valid()
 
-# add custom message 
+    return FileName, NumOfFiles, FileExtension, CustomMessage
+
+# -- func end --
+
+if len(sys.argv) > 4:
+    sys.argv[1] = FileName
+    sys.argv[2] = NumOfFiles
+    sys.argv[3] = FileExtension
+    sys.argv[4] = CustomMessage
+    Info_ToJson(FileName, NumOfFiles, FileExtension, CustomMessage)
+    Creating_Files()
+    print("Finished.")
+    sys.exit()
+elif len(sys.argv) <= 4:
+    print(" Not enough system arguments provided. Running default setup. ")
 
 
-FileName, NumOfFiles, FileExtension = Default_Setup()
-Json_1 = Info_ToJson(FileName, NumOfFiles, FileExtension)
+FileName, NumOfFiles, FileExtension, CustomMessage = Default_Setup()
+Json_1 = Info_ToJson(FileName, NumOfFiles, FileExtension, CustomMessage)
 
 Creating_Files()
 
