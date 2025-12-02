@@ -27,3 +27,11 @@ Let's you view your Json settings
 **Python main.py reset**
 
 Resets to default values.
+
+**Python main.py previous**
+
+Outputs the previous inputs and lets you output them quicker
+
+**Python main.py help**
+
+Gives a more simplified version of this 'how to use' page.

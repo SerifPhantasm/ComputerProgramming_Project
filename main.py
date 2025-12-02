@@ -11,7 +11,12 @@ FileExtension = ""
 Folder_ = "Created Files"
 jsFile = "settings.json"
 CustomMessage = f"This is the {NumOfFiles} file."
-
+Json_1 = {
+        "FileName": FileName,
+        "NumOfFiles": NumOfFiles,
+        "FileExtension": FileExtension,
+        "CustomMessage": CustomMessage 
+    }
 
 # -- func start -- 
 
@@ -89,12 +94,6 @@ def CustomMessage_Valid():
 
 
 def Info_ToJson(FileName, NumOfFiles, FileExtension, CustomMessage):
-    Json_1 = {
-        "FileName": FileName,
-        "NumOfFiles": NumOfFiles,
-        "FileExtension": FileExtension,
-        "CustomMessage": CustomMessage 
-    }
     Json_str = json.dumps(Json_1)
     try:
         with open(jsFile, "r") as file:
@@ -161,8 +160,8 @@ def Default_Setup():
 # -- func end --
 
 if len(sys.argv) == 2:
+
     if sys.argv[1] == "reset":
-        
         FileName = "null"
         NumOfFiles = 0
         FileExtension = ""
@@ -180,7 +179,34 @@ if len(sys.argv) == 2:
             time.sleep(1.5)
             quit()
         sys.exit()
+    
+    if sys.argv[1] == "previous":
+        try:
+            with open(jsFile, "r") as file:
+                _js_file_ = json.load(file)
+                FileName = _js_file_["FileName"]
+                NumOfFiles = _js_file_["NumOfFiles"]
+                FileExtension = _js_file_["FileExtension"]
+                CustomMessage = _js_file_["CustomMessage"]
+                print(Json_1)
+        except:
+            print("settings.json not found.")
+            time.sleep(1.5)
+            quit()
+        Creating_Files()
+        print("Finished.")
+        sys.exit()
        
+    if sys.argv[1] == "help":
+        print(Line_)
+        print("Command Line Arguments: ")
+        print("How to use in Terminal/IDE: python3 main.py [command] ")
+        print(" python3 main.py [Filename] [NumOfFiles] [FileExtension] [CustomMessage] ")
+        print("")
+        print(" reset - Resets all settings to default values. ")
+        print(" viewjson - View the current settings in settings.json file. ")
+        print(" previous - Create files based on the previous settings stored in settings.json file. ")
+
 
 
 if len(sys.argv) > 4: # if user puts FileName, NumOfFiles, FileExtension, CustomMessage as sys args
