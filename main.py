@@ -13,11 +13,19 @@ jsFile = "settings.json"
 CustomMessage = f"This is the {NumOfFiles} file."
 
 
-if not os.path.exists(Folder_):
-    os.mkdir(Folder_)
-    print(f"Folder, ({Folder_}) has been Created")
-else:
-    print(f"The Folder, ({Folder_}) already Exists.")
+# -- func start -- 
+
+def Create_Folder():
+    try:
+        if not os.path.exists(Folder_):
+            os.mkdir(Folder_)
+            print(f"Folder, ({Folder_}) has been Created")
+        else:
+            print(f"The Folder, ({Folder_}) already Exists.")
+    except Exception as e:
+        print(f"Failed to create folder {Folder_}: {e}")
+        sys.exit()
+    return
 
 
 def FileName_Valid():
@@ -29,6 +37,7 @@ def FileName_Valid():
             print(FileName)
             break
     return FileName
+
 
 def NumOfFiles_Valid():
     while True:
@@ -46,7 +55,8 @@ def NumOfFiles_Valid():
     str(NumOfFiles)
     
     return NumOfFiles
-    
+
+
 def FileExtension_Valid():
     while True:
         try:
@@ -58,7 +68,6 @@ def FileExtension_Valid():
             else:
                 print(f"{FileExtension} is a valid file extension.")
                 break
-            
         except:
             print("ERROR: Something went wrong. Please try again.")
 
@@ -66,6 +75,7 @@ def FileExtension_Valid():
         FileExtension = "." + FileExtension
 
     return FileExtension
+
 
 def CustomMessage_Valid():
     while True:
@@ -76,6 +86,7 @@ def CustomMessage_Valid():
         except:
             print("ERROR: Something went wrong. Please try again.")
     return CustomMessage
+
 
 def Info_ToJson(FileName, NumOfFiles, FileExtension, CustomMessage):
     Json_1 = {
@@ -117,6 +128,7 @@ def Info_ToJson(FileName, NumOfFiles, FileExtension, CustomMessage):
 
 print(" ")
 
+
 def Creating_Files():
     Confirmation_ = input(f"Do you want to create {NumOfFiles} of these files? Type 'y' or 'n' ").lower()
     if Confirmation_ == "n":
@@ -138,6 +150,7 @@ def Creating_Files():
 
 def Default_Setup():
     print("-")
+    Create_Folder()
     FileName = FileName_Valid()
     NumOfFiles = NumOfFiles_Valid()
     FileExtension = FileExtension_Valid()
@@ -147,7 +160,30 @@ def Default_Setup():
 
 # -- func end --
 
-if len(sys.argv) > 4:
+if len(sys.argv) == 2:
+    if sys.argv[1] == "reset":
+        
+        FileName = "null"
+        NumOfFiles = 0
+        FileExtension = ""
+        jsFile = "settings.json"
+        CustomMessage = f"This is the {NumOfFiles} file."
+        sys.exit()
+        
+    if sys.argv[1] == "viewjson":
+        try:
+            with open(jsFile, "r") as file:
+                _js_file_ = json.load(file)
+                print(_js_file_)
+        except:
+            print("settings.json not found.")
+            time.sleep(1.5)
+            quit()
+        sys.exit()
+       
+
+
+if len(sys.argv) > 4: # if user puts FileName, NumOfFiles, FileExtension, CustomMessage as sys args
     FileName = sys.argv[1]
     NumOfFiles = int(sys.argv[2])
     FileExtension = sys.argv[3]
@@ -156,17 +192,15 @@ if len(sys.argv) > 4:
     Creating_Files()
     print("Finished.")
     sys.exit()
+elif len(sys.argv) == 1: 
+    print(" ")
 elif len(sys.argv) <= 4:
-    print(" Not enough system arguments provided. Running default setup. ")
-elif len(sys.argv) == 0:
-    print("")
+    print(" Not enough system arguments provided OR incorrect system argument... \n Running default setup. ")
+        
 
-FileName, NumOfFiles, FileExtension, CustomMessage = Default_Setup()
+Create_Folder, FileName, NumOfFiles, FileExtension, CustomMessage = Default_Setup()
 Json_1 = Info_ToJson(FileName, NumOfFiles, FileExtension, CustomMessage)
 
 Creating_Files()
 
-
-
-
-
+print("Finished.")
