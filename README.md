@@ -1,4 +1,5 @@
 # File Generator Python Project
+A python command-line script that allows the user to change multiple aspects of the files they want to generate.
 
 ## Overview
 This python project takes 4 inputs from the user,
@@ -7,13 +8,17 @@ This python project takes 4 inputs from the user,
 - File Extension
 - A message to be viewable inside the file.
 
-A json file is also contained with this project to show you your previous result.
+A json file is also contained with this project to show you your previous result and save your inputs after the script quits. 
 
 `{"FileName": "testfile", "NumOfFiles": 10, "FileExtension": "txt", "CustomMessage": "This is a Custom Message."}`
 
 
-## How to Use
+## Requirements
+Python 3.8 and above
+Access to a terminal/IDE with a terminal.
+Permission to create files
 
+## How to Use
 
 ### Specific Commands for the Script
 **python main.py 'File Name' 'Number of Files' 'File Extension' 'Custom Message'**
@@ -38,4 +43,4 @@ Gives a more simplified version of this 'how to use' page.
 
 
 ## How I used AI
-For this project, I used AI to help me debug and fix my code with the help of Copilot. I made sure to proof-read any AI fix to make sure that it didn't give me worse issues in my code and that it were fixes that I was able to understand myself.
+For this project, I used AI to help me debug and fix my code with the help of Github Copilot. I made sure to proof-read any AI fix to guarantee that it didn't introduce extra bugs within my code and that it's implementation of code that I'm able to understand myself.

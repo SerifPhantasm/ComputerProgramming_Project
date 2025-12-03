@@ -39,6 +39,8 @@ def FileName_Valid():
             FileName = input("What Would you want the file name to be? ")
             if len(FileName) >= 20:
                 print(" Error: File Name is too long. ")
+            elif len(FileName) == 0:
+                print(" Error: File Name is too short. ")
             else:
                 print(FileName)
                 break
@@ -56,6 +58,8 @@ def NumOfFiles_Valid():
                 NumOfFiles = int(input("How many files would you like to create? "))
                 if NumOfFiles >= 10000:
                     print(" You're printing TOO MANY files. ")
+                elif NumOfFiles <= 0:
+                    print(" You need to print at LEAST 1 file. ")
                 else:
                     print(NumOfFiles)
                     break
@@ -89,6 +93,7 @@ def FileExtension_Valid():
         print("\n Exiting Program...")
         sys.exit()
 
+# Ensure the file extension starts with a dot
     if FileExtension[0] != ".":
         FileExtension = "." + FileExtension
 
@@ -152,6 +157,7 @@ def Creating_Files():
         time.sleep(0.5)
         exit()
     else:
+        # The code below starts creating files up 
         for i in range(NumOfFiles):
             full_path = os.path.join(Folder_, f"{FileName}_{i+1}{FileExtension}")
             count = i + 1
