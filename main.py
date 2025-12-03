@@ -157,7 +157,8 @@ def Creating_Files():
         time.sleep(0.5)
         exit()
     else:
-        # The code below starts creating files up 
+        # The code below starts creating a loop to create files, it also adds a file number 
+        # to each file, to mark within the file on what number file it is. 
         for i in range(NumOfFiles):
             full_path = os.path.join(Folder_, f"{FileName}_{i+1}{FileExtension}")
             count = i + 1
