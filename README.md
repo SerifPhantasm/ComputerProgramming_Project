@@ -18,23 +18,23 @@ Access to a terminal/IDE with a terminal.
 ## How to Use
 
 ### Specific Commands for the Script
-**python main.py 'File Name' 'Number of Files' 'File Extension' 'Custom Message'**
+- **python main.py 'File Name' 'Number of Files' 'File Extension' 'Custom Message'**
 
 let's you quickly customise the file(s) you want to generate.
 
-**python main.py viewJson**
+- **python main.py viewJson**
 
 Let's you view settings.json by outputting it in the terminal from main.py
 
-**Python main.py reset**
+- **Python main.py reset**
 
 Resets to default values.
 
-**Python main.py previous**
+- **Python main.py previous**
 
 Outputs the previous inputs and lets you output them quicker
 
-**Python main.py help**
+- **Python main.py help**
 
 Gives a more simplified version of this 'how to use' page.
 
