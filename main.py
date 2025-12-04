@@ -2,8 +2,11 @@ import time
 import json
 import os
 import sys
-from FileExtensionList import file_extensions 
 
+file_extensions = [
+    "txt","md","rtf","doc","docx","odt","pdf","epub","tex",
+    "csv","data","dat","json","xml", "eml","pages","ipynb"
+]
 Line_ = ("---------------------------------------------------------")
 FileName = "null"
 NumOfFiles = 0
